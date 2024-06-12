@@ -1,11 +1,11 @@
-import DefaultLayout from '@/layouts/default';
+import DefaultLayout from "@/layouts/default";
 
 export default function IndexPage() {
-    return (
-        <DefaultLayout>
-            <h1>menu</h1>
-        </DefaultLayout>
-    );
+  return (
+    <DefaultLayout>
+      <h1>menu</h1>
+    </DefaultLayout>
+  );
 }
 
 // <DefaultLayout>
