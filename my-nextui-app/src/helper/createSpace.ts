@@ -1,16 +1,16 @@
 /* eslint-disable */
-type getData = {
-  id: number;
-  name: string;
-  paramId: number;
-  epoch: number;
-  a: number;
-  i: number;
-  om: number;
-  w: number;
-  ma: number;
-  orbitAround: string;
-};
+// type getData = {
+//   id: number;
+//   name: string;
+//   paramId: number;
+//   epoch: number;
+//   a: number;
+//   i: number;
+//   om: number;
+//   w: number;
+//   ma: number;
+//   orbitAround: string;
+// };
 const Spacekit = window.Spacekit;
 export const createSpace = (data: getData[], spaceRef: any) => {
   console.log("data:", data);
@@ -142,7 +142,7 @@ export const createSpace = (data: getData[], spaceRef: any) => {
     // mySpace.orbitAround(earth);
   });
 
-  // viz.zoom();
+  //   viz.zoom(earth);
 
   // Set up event listeners
 };
