@@ -1,7 +1,18 @@
 /* eslint-disable */
-import { SpaceObject } from "spacekit.js";
-
-export const createSpace = (data, spaceRef) => {
+type getData = {
+  id: number;
+  name: string;
+  paramId: number;
+  epoch: number;
+  a: number;
+  i: number;
+  om: number;
+  w: number;
+  ma: number;
+  orbitAround: string;
+};
+const Spacekit = window.Spacekit;
+export const createSpace = (data: getData[], spaceRef: any) => {
   console.log("data:", data);
 
   const viz = new Spacekit.Simulation(spaceRef.current, {

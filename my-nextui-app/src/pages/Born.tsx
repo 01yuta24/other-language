@@ -2,11 +2,9 @@
 import DefaultLayout from "@/layouts/default";
 import { Slider } from "@nextui-org/slider";
 import { Button } from "@nextui-org/button";
-import { SetStateAction, useState } from "react";
 export type SliderValue = number | number[];
 import axios from "axios";
 export default function BornPage() {
-  const [inValue, setInValue] = useState(0);
   const postFn = () => {
     console.log("button");
     axios

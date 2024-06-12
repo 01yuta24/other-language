@@ -1,6 +1,7 @@
 package com.example.planetApp
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.relational.core.sql.In
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.stereotype.Component
@@ -51,6 +52,7 @@ class DataRowMapper:RowMapper<PlanetData>{
     }
 }
 
+
 @Repository
 class PlanetRepository (@Autowired val jdbcTemplate: JdbcTemplate,
                         @Autowired val planetRowMapper: PlanetRowMapper,
@@ -59,6 +61,51 @@ class PlanetRepository (@Autowired val jdbcTemplate: JdbcTemplate,
 ){
     fun getPlanets():List<Planet>{
         return jdbcTemplate.query("SELECT * FROM planets",planetRowMapper)
+    }
+
+    fun postPlanets(planetRequest: PlanetRequest):List<PlanetData>{
+        print("planetRequest")
+        println(planetRequest.epoch)
+        val paramsData = jdbcTemplate.query("SELECT * FROM params",paramRowMapper)
+        val paramId:Int = paramsData.size + 1
+        jdbcTemplate.update("INSERT INTO params VALUES (?,?,?,?,?,?,?,?,?);",
+            paramId,
+            planetRequest.epoch,
+            planetRequest.semiMajor,
+            planetRequest.eccentricity,
+            planetRequest.inclination,
+            0.1,
+            0.1,
+            0.1,
+            planetRequest.orbitAround
+            )
+        val newParamsData = jdbcTemplate.query("SELECT * FROM params",paramRowMapper)
+        print("new")
+        println(newParamsData)
+        val planetsData = jdbcTemplate.query("SELECT * FROM planets",planetRowMapper)
+        val planetId:Int = planetsData.size + 1
+        jdbcTemplate.update("INSERT INTO planets VALUES (?,?,?);",
+            planetId,
+            planetRequest.name,
+            newParamsData.size
+            )
+
+
+       return jdbcTemplate.query(
+            "SELECT planets.id,\n" +
+                    "planets.name,\n" +
+                    "planets.param_id,\n" +
+                    "params.epoch,\n" +
+                    "params.a,\n" +
+                    "params.e,\n" +
+                    "params.i,\n" +
+                    "params.om,\n" +
+                    "params.w,\n" +
+                    "params.ma,\n" +
+                    "params.orbit_around\n" +
+                    "FROM planets \n" +
+                    "JOIN params ON planets.param_id = params.id"
+            ,dataRowMapper)
     }
 
     fun getParams():List<Param>{

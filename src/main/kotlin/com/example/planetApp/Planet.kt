@@ -27,3 +27,5 @@ data class PlanetData(
     val ma :Double,
     val orbitAround :String
     )
+
+data class Foo(val id: Int, val name: String)
