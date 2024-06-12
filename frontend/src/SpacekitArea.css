@@ -1,0 +1,11 @@
+.main-container {
+    height: 100%;
+    width: 100%;
+}
+
+.nav {
+    position: absolute;
+    background-color: #ccc;
+    opacity: 0.7;
+    right: 0;
+}

@@ -7,7 +7,6 @@ import org.springframework.boot.runApplication
 class PlanetAppApplication
 
 fun main(args: Array<String>) {
-
 	runApplication<PlanetAppApplication>(*args)
 }
 

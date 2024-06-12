@@ -1,0 +1,3 @@
+TRUNCATE TABLE params;
+INSERT INTO params VALUES (1, 10000,0.1,0.1,0.1,0.1,0.1,0.1,'sun');
+INSERT INTO params VALUES (2, 20000,0.2,0.2,0.2,0.2,0.2,0.2,'earth');

@@ -7,14 +7,29 @@ import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/")
-class PlanetController {
+@RequestMapping("/api")
+//@CrossOrigin
+//@ResponseBody
+class PlanetController(val planetRepository: PlanetRepository) {
 
     @GetMapping("/planets")
-    @ResponseBody
-    @CrossOrigin
-    fun getPlanets(): String {
-        return "Here are planets!"
+    fun getPlanets(): List<Planet> {
+        return planetRepository.getPlanets()
     }
-
+    @GetMapping("/params")
+    fun getParams():List<Param>{
+        return planetRepository.getParams()
+    }
+    @GetMapping("/planetData")
+    fun getData(): List<PlanetData> {
+        return planetRepository.getData()
+    }
+    @GetMapping("/home")
+    fun home():String {
+        return "redirect:index.html";
+    }
+    @GetMapping("/born")
+    fun born():String {
+        return "redirect:index.html";
+    }
 }

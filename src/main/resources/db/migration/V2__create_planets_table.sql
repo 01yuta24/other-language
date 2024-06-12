@@ -1,4 +1,5 @@
 CREATE TABLE planets(
     id SERIAL PRIMARY KEY,
-    name CHAR(64)
-)
+    name VARCHAR(64),
+    param_id INT
+);

@@ -7,6 +7,7 @@ const viz = new Spacekit.Simulation(document.getElementById('main-container'), {
         enableDrift: true,
     },
 });
+console.log('viz', viz);
 
 // Create a skybox using NASA TYCHO artwork.
 viz.createSkybox(Spacekit.SkyboxPresets.NASA_TYCHO);
