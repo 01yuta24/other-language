@@ -1,22 +1,28 @@
 package com.example.planetApp
 
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.client.RestClientTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.client.postForEntity
 import org.springframework.boot.test.web.server.LocalServerPort
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.context.jdbc.Sql
+import org.springframework.web.client.RestClient
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql("/insert_params_data.sql")
 @Sql("/insert_planets_data.sql")
 class PlanetAppApplicationTests(@Autowired val restTemplate: TestRestTemplate,
-								@LocalServerPort val port: Int) {
+								@LocalServerPort val port: Int
+
+	) {
 
 	@Test
 	fun `最初のテスト`() {
@@ -61,27 +67,74 @@ class PlanetAppApplicationTests(@Autowired val restTemplate: TestRestTemplate,
 
 	@Test
 	fun `planets POSTするとデータが一つ増える`() {
-		val getResponse = restTemplate.getForEntity("http://localhost:$port/api/planetData", Array<PlanetData>::class.java)
+		val getResponse =
+			restTemplate.getForEntity("http://localhost:$port/api/planetData", Array<PlanetData>::class.java)
 		val todos1 = getResponse.body!!
 
-		val foo = PlanetRequest("taro",10000.0,0.3,0.3,0.3,"sun")
-		val response = restTemplate.postForEntity("http://localhost:$port/api/planets",foo, Array<PlanetRequest>::class.java)
+		val foo = PlanetRequest("taro", 10000.0, 0.3, 0.3, 0.3, "sun")
+		val response =
+			restTemplate.postForEntity("http://localhost:$port/api/planets", foo, Array<PlanetRequest>::class.java)
 
 		// ふたたび localhost/todos に GETリクエストを送り、レスポンスを Todoオブジェクトの配列として解釈する。
-		val getResponse2 = restTemplate.getForEntity("http://localhost:$port/api/planetData", Array<PlanetData>::class.java)
+		val getResponse2 =
+			restTemplate.getForEntity("http://localhost:$port/api/planetData", Array<PlanetData>::class.java)
 		// このときのレスポンスを todos2 として記憶。
 		val todos2 = getResponse2.body!!
 
 		// 配列 todos2 は、配列 todos1 よりも 1 要素だけ多い。
 		assertThat(todos2.size, equalTo(todos1.size + 1))
-
-
-
-
-
-
-
 	}
+	@Test
+//	@Sql("/insert_params_data.sql")
+//	@Sql("/insert_planets_data.sql")
+	fun `planets DELETEでOKが返ってくる`() {
+		val getResponse =
+			restTemplate.getForEntity("http://localhost:$port/api/planetData", Array<PlanetData>::class.java)
+		val todos1 = getResponse.body!!
+
+		val foo = PlanetDelRequest(arrayOf("1"))
+		// localhost/todos に GETリクエストを発行する。
+		val response = restTemplate.exchange("http://localhost:$port/api/planets", HttpMethod.DELETE, HttpEntity(foo),String::class.java)
+		// レスポンスのステータスコードは OK である。
+		println("********* ${response.body}")
+		// レスポンスのステータスコードは OK である。
+		assertThat(response.statusCode, equalTo(HttpStatus.OK))
+
+		val getResponse2 =
+			restTemplate.getForEntity("http://localhost:$port/api/planetData", Array<PlanetData>::class.java)
+//		 このときのレスポンスを todos2 として記憶。
+		val todos2 = getResponse2.body!!
+
+		print("************ $response *****************")
+		// 配列 todos2 は、配列 todos1 よりも 1 要素だけ多い。
+		assertThat(todos2.size, lessThan(todos1.size))
+	}
+
+
+
+	@Test
+	@Sql("/insert_params_data.sql")
+	@Sql("/insert_planets_data.sql")
+	fun `planets DELETEで中身が減ってる`() {
+		val getResponse =
+			restTemplate.getForEntity("http://localhost:$port/api/planetData", Array<String>::class.java)
+		val todos1 = getResponse.body!!
+
+		val foo = PlanetDelRequest(arrayOf("1","2"))
+		// localhost/todos に GETリクエストを発行する。
+		val response = restTemplate.exchange("http://localhost:$port/api/planets", HttpMethod.DELETE, HttpEntity(foo),String::class.java)
+		// レスポンスのステータスコードは OK である。
+		// ふたたび localhost/todos に GETリクエストを送り、レスポンスを Todoオブジェクトの配列として解釈する。
+		val getResponse2 =
+			restTemplate.getForEntity("http://localhost:$port/api/planetData", Array<PlanetData>::class.java)
+		// このときのレスポンスを todos2 として記憶。
+		val todos2 = getResponse2.body!!
+
+		print("************ $response *****************")
+		// 配列 todos2 は、配列 todos1 よりも 1 要素だけ多い。
+		assertThat(todos2.size, lessThan(todos1.size))
+	}
+
 
 	@Test
 	fun `params GETでOKが返ってくる`(){

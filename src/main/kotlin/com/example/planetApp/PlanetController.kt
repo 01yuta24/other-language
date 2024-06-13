@@ -1,6 +1,7 @@
 package com.example.planetApp
 
 import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -22,6 +23,11 @@ class PlanetController(val planetRepository: PlanetRepository) {
     fun postPlanets(@RequestBody planetRequest: PlanetRequest):List<PlanetData>{
         return planetRepository.postPlanets(planetRequest)
     }
+    @DeleteMapping("/planets")
+    fun deletePlanets(@RequestBody planetDelRequest: PlanetDelRequest):Array<String>{
+        println("************ $planetDelRequest ****************")
+        return planetRepository.deletePlanets(planetDelRequest)
+    }
     @GetMapping("/params")
     fun getParams():List<Param>{
         return planetRepository.getParams()
@@ -30,9 +36,6 @@ class PlanetController(val planetRepository: PlanetRepository) {
     fun getData(): List<PlanetData> {
         return planetRepository.getData()
     }
-
-
-
     @GetMapping("/home")
     fun home():String {
         return "redirect:index.html";

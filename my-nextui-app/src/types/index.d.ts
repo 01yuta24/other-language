@@ -1,8 +1,8 @@
-// import { SVGProps } from "react";
+// import { SVGP/rops } from "react";
 
-// type IconSvgProps = SVGProps<SVGSVGElement> & {
-//   size?: number;
-// };
+type IconSvgProps = SVGProps<SVGSVGElement> & {
+  size?: number;
+};
 
 declare global {
   interface Window {

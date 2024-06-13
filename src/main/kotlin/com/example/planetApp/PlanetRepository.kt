@@ -63,12 +63,20 @@ class PlanetRepository (@Autowired val jdbcTemplate: JdbcTemplate,
         return jdbcTemplate.query("SELECT * FROM planets",planetRowMapper)
     }
 
-    fun postPlanets(planetRequest: PlanetRequest):List<PlanetData>{
+    fun postPlanets(planetRequest: PlanetRequest):List<PlanetData> {
         print("planetRequest")
         println(planetRequest.epoch)
-        val paramsData = jdbcTemplate.query("SELECT * FROM params",paramRowMapper)
-        val paramId:Int = paramsData.size + 1
-        jdbcTemplate.update("INSERT INTO params VALUES (?,?,?,?,?,?,?,?,?);",
+        val paramsData = jdbcTemplate.query("SELECT * FROM params", paramRowMapper)
+        println("************* ${paramsData.size}")
+        var paramId:Int
+        if(paramsData.size == 0){
+             paramId = 1
+        }else{
+             paramId = paramsData.last().id.toInt() + 1
+        }
+        println("*********** $paramId")
+        jdbcTemplate.update(
+            "INSERT INTO params VALUES (?,?,?,?,?,?,?,?,?);",
             paramId,
             planetRequest.epoch,
             planetRequest.semiMajor,
@@ -78,19 +86,24 @@ class PlanetRepository (@Autowired val jdbcTemplate: JdbcTemplate,
             0.1,
             0.1,
             planetRequest.orbitAround
-            )
-        val newParamsData = jdbcTemplate.query("SELECT * FROM params",paramRowMapper)
+        )
+        val newParamsData = jdbcTemplate.query("SELECT * FROM params", paramRowMapper)
         print("new")
         println(newParamsData)
-        val planetsData = jdbcTemplate.query("SELECT * FROM planets",planetRowMapper)
-        val planetId:Int = planetsData.size + 1
-        jdbcTemplate.update("INSERT INTO planets VALUES (?,?,?);",
+        val planetsData = jdbcTemplate.query("SELECT * FROM planets", planetRowMapper)
+        var planetId:Int
+        if(planetsData.size == 0){
+            planetId = 1
+        }else{
+            planetId = planetsData.last().id.toInt() + 1
+        }
+        println("*********** $planetId")
+        jdbcTemplate.update(
+            "INSERT INTO planets VALUES (?,?,?);",
             planetId,
             planetRequest.name,
             newParamsData.size
-            )
-
-
+        )
        return jdbcTemplate.query(
             "SELECT planets.id,\n" +
                     "planets.name,\n" +
@@ -106,6 +119,15 @@ class PlanetRepository (@Autowired val jdbcTemplate: JdbcTemplate,
                     "FROM planets \n" +
                     "JOIN params ON planets.param_id = params.id"
             ,dataRowMapper)
+    }
+
+    fun deletePlanets(planetDelRequest: PlanetDelRequest):Array<String>{
+        print("*********** ${planetDelRequest.deleteList[0]} *****************")
+        val request:Array<String> = planetDelRequest.deleteList
+        val array: Array<Int> = planetDelRequest.deleteList.map { it.toInt() }.toTypedArray()
+        array.forEach { id -> jdbcTemplate.update("DELETE FROM planets WHERE id IN (?)",id) }
+        array.forEach { id -> jdbcTemplate.update("DELETE FROM params WHERE id IN (?)",id) }
+        return request
     }
 
     fun getParams():List<Param>{

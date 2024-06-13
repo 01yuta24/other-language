@@ -6,7 +6,6 @@ import PlanetsPage from "@/pages/Planets";
 import StockPage from "@/pages/Stock";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Progress } from "@nextui-org/progress";
 import Loading from "./Loading";
 
 function App() {
@@ -37,9 +36,12 @@ function App() {
     return (
       <Routes>
         <Route element={<IndexPage />} path="/" />
-        <Route element={<BornPage />} path="/born" />
+        <Route element={<BornPage setGetData={setGetData} />} path="/born" />
         <Route element={<PlanetsPage getData={getData} />} path="/planets" />
-        <Route element={<StockPage />} path="/stock" />
+        <Route
+          element={<StockPage getDataState={[getData, setGetData]} />}
+          path="/stock"
+        />
       </Routes>
     );
   }

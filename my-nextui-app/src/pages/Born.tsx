@@ -4,7 +4,7 @@ import { Slider } from "@nextui-org/slider";
 import { Button } from "@nextui-org/button";
 export type SliderValue = number | number[];
 import axios from "axios";
-export default function BornPage() {
+export default function BornPage({ setGetData }: any) {
   const postFn = () => {
     console.log("button");
     axios
@@ -17,7 +17,7 @@ export default function BornPage() {
         orbitAround: "sun",
       })
       .then((res) => res.data)
-      .then((data) => console.log(data));
+      .then((data) => setGetData(data));
   };
   return (
     <DefaultLayout>
