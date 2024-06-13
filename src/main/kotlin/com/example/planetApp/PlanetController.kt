@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 @Controller
 @RequestMapping("/")
 class PlanetIndex(){
-    @RequestMapping("/home","/born","/stock")
+    @RequestMapping("/planets","/born","/stock")
     fun index():String{
         return "forward:/"
     }

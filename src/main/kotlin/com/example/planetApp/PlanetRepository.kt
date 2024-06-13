@@ -66,18 +66,26 @@ class PlanetRepository (@Autowired val jdbcTemplate: JdbcTemplate,
     fun postPlanets(planetRequest: PlanetRequest):List<PlanetData> {
         print("planetRequest")
         println(planetRequest.epoch)
-        val paramsData = jdbcTemplate.query("SELECT * FROM params", paramRowMapper)
-        println("************* ${paramsData.size}")
-        var paramId:Int
-        if(paramsData.size == 0){
-             paramId = 1
+//        val paramsData = jdbcTemplate.query("SELECT * FROM params", paramRowMapper)
+//        println("*************paramsData ${paramsData.size}")
+//        var paramId:Int
+//        if(paramsData.size == 0){
+//             paramId = 1
+//        }else{
+//             paramId = paramsData.last().id.toInt() + 1
+//        }
+//        println("***********paramId $paramId")
+        val planetsData = jdbcTemplate.query("SELECT * FROM planets", planetRowMapper)
+        var planetId:Int
+        if(planetsData.size == 0){
+            planetId = 1
         }else{
-             paramId = paramsData.last().id.toInt() + 1
+            planetId = planetsData.last().id.toInt() + 1
         }
-        println("*********** $paramId")
+        println("*********** $planetId")
         jdbcTemplate.update(
             "INSERT INTO params VALUES (?,?,?,?,?,?,?,?,?);",
-            paramId,
+            planetId,
             planetRequest.epoch,
             planetRequest.semiMajor,
             planetRequest.eccentricity,
@@ -90,19 +98,11 @@ class PlanetRepository (@Autowired val jdbcTemplate: JdbcTemplate,
         val newParamsData = jdbcTemplate.query("SELECT * FROM params", paramRowMapper)
         print("new")
         println(newParamsData)
-        val planetsData = jdbcTemplate.query("SELECT * FROM planets", planetRowMapper)
-        var planetId:Int
-        if(planetsData.size == 0){
-            planetId = 1
-        }else{
-            planetId = planetsData.last().id.toInt() + 1
-        }
-        println("*********** $planetId")
         jdbcTemplate.update(
             "INSERT INTO planets VALUES (?,?,?);",
             planetId,
             planetRequest.name,
-            newParamsData.size
+            planetId
         )
        return jdbcTemplate.query(
             "SELECT planets.id,\n" +

@@ -17,7 +17,6 @@ function App() {
       .get("/api/planetData")
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setGetData(data);
         setTimeout(function () {
           setLoading(false);
@@ -28,7 +27,7 @@ function App() {
   if (loading) {
     return (
       <>
-        <Loading loading={loading} setLoading={setLoading} />
+        <Loading setLoading={setLoading} />
       </>
     );
   } else {

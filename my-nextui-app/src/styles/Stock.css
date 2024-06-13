@@ -1,0 +1,23 @@
+.stock-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../Images/background6.jpeg);
+  background-size: cover;
+}
+
+.stock-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  margin: 0 auto;
+  width: 1200px;
+  height: 100%;
+}
+
+.stock-button-container {
+  margin: 0 auto;
+}

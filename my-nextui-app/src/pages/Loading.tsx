@@ -5,18 +5,18 @@ import { Card, CardFooter } from "@nextui-org/card";
 import { useEffect, useState } from "react";
 import { Image } from "@nextui-org/image";
 import "@/styles/Loading.css";
-import imgUrl from "../../Genesis_Galaxy.png";
+import imgUrl from "../Images/Genesis_Galaxy.png";
 import { Link } from "react-router-dom";
 import { Button } from "@nextui-org/button";
 
-export default function Loading({ loading, setLoading }: any) {
+export default function Loading({ setLoading }: any) {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
     setInterval(() => {
       setValue((v) => (v >= 100 ? 100 : v + 3));
     }, 60);
-  }, [loading]);
+  }, []);
 
   const linkFn = () => {
     setLoading(false);

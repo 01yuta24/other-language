@@ -16,6 +16,7 @@ type getData = {
   paramId: number;
   epoch: number;
   a: number;
+  e: number;
   i: number;
   om: number;
   w: number;

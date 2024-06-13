@@ -1,0 +1,19 @@
+.index-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../Images/background.jpeg);
+  background-size: cover;
+}
+
+.index-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  margin: 0 auto;
+  width: 500px;
+  height: 100%;
+}

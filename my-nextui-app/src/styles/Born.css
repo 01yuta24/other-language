@@ -1,0 +1,26 @@
+.born-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../Images/background5.jpeg);
+  background-size: cover;
+}
+
+.born-container {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  margin: 0 auto;
+  width: 500px;
+  height: 100%;
+  align-items: center;
+}
+
+.select-box {
+  padding: 0 3rem;
+  background-color: none;
+}
