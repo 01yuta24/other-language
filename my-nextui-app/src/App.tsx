@@ -6,7 +6,7 @@ import PlanetsPage from "@/pages/Planets";
 import StockPage from "@/pages/Stock";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Loading from "./Loading";
+import Loading from "@/pages/Loading";
 
 function App() {
   const [getData, setGetData] = useState<getData[] | null>(null);
@@ -28,16 +28,28 @@ function App() {
   if (loading) {
     return (
       <>
-        <div>Now Loading...</div>
-        <Loading />
+        <Loading loading={loading} setLoading={setLoading} />
       </>
     );
   } else {
     return (
       <Routes>
         <Route element={<IndexPage />} path="/" />
-        <Route element={<BornPage setGetData={setGetData} />} path="/born" />
-        <Route element={<PlanetsPage getData={getData} />} path="/planets" />
+        <Route
+          element={
+            <BornPage
+              setGetData={setGetData}
+              setLoading={setLoading}
+              loading={loading}
+              getData={getData}
+            />
+          }
+          path="/born"
+        />
+        <Route
+          element={<PlanetsPage getData={getData} setLoading={setLoading} />}
+          path="/planets"
+        />
         <Route
           element={<StockPage getDataState={[getData, setGetData]} />}
           path="/stock"

@@ -1,0 +1,17 @@
+.loading-main {
+  padding: 0;
+  position: absolute;
+  top: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  /* margin: 0 auto; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.card-container {
+  margin: 0 auto;
+  width: 500px;
+  height: 500px;
+}

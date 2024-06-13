@@ -4,10 +4,17 @@ import { Slider } from "@nextui-org/slider";
 import { Button } from "@nextui-org/button";
 export type SliderValue = number | number[];
 import axios from "axios";
-export default function BornPage({ setGetData }: any) {
-  const postFn = () => {
+import PlanetsPage from "./Planets";
+
+export default function BornPage({
+  setGetData,
+  setLoading,
+  loading,
+  getData,
+}: any) {
+  const postFn = async () => {
     console.log("button");
-    axios
+    await axios
       .post("/api/planets", {
         name: "taro",
         epoch: 1000.0,
@@ -18,7 +25,9 @@ export default function BornPage({ setGetData }: any) {
       })
       .then((res) => res.data)
       .then((data) => setGetData(data));
+    setLoading(true);
   };
+
   return (
     <DefaultLayout>
       <h2>Born</h2>

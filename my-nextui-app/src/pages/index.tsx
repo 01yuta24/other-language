@@ -1,9 +1,18 @@
 import DefaultLayout from "@/layouts/default";
-
+import { Button } from "@nextui-org/button";
+import { Link } from "react-router-dom";
 export default function IndexPage() {
   return (
     <DefaultLayout>
-      <h1>menu</h1>
+      <Button>
+        <Link to="/planets">宇宙へGO!</Link>
+      </Button>
+      <Button>
+        <Link to="/born">惑星をつくる</Link>
+      </Button>
+      <Button>
+        <Link to="/stock">惑星リストをみる</Link>
+      </Button>
     </DefaultLayout>
   );
 }

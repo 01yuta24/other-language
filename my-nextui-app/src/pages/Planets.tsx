@@ -14,6 +14,7 @@ export default function PlanetsPage({ getData }: getData[] | any) {
     //   .then((res) => res.data)
     //   .then((data) => createSpace(data, spaceRef));
     createSpace(getData, spaceRef);
+    // setLoading(false);
   });
   return (
     <DefaultLayout>
