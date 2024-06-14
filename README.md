@@ -12,4 +12,4 @@
     <dt>アプリデモ画面</dt>
     <dt>:メニュー</dt>
 </dl>
-![メニュー](./mdImage/menu.png)
+![メニュー](/mdImage/menu.png)
