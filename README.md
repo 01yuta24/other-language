@@ -23,9 +23,11 @@
 ## アプリ使用方法
 
 ```
-1.ソースをクローンする
-2.gradlewを実行
-3.http://localhost:8080 にアクセス
+1.データベースを作成する
+createdb planetdb
+2.ソースをクローンする
+3.gradlewを実行
+4.http://localhost:8080 にアクセス
 ```
 
 ## データベースの構成
