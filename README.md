@@ -12,4 +12,4 @@
     <dt>アプリデモ画面</dt>
     <dt>:メニュー</dt>
 </dl>
-![alt text](mdImage/menu.png)
+![alt text](https://github.com/01yuta24/other-language/tree/main/mdImage/menu.png)
